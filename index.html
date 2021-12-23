@@ -18,6 +18,25 @@
     </div>
     <script>
         const calculator = document.getElementById('calculator');
+        const result = document.getElementById('result');
+
+        calculator.addEventListener('keyup', function (element) {
+            // da dozvolimo da calculator.value prima samo brojeve i matematicke operacije
+            calculator.value = calculator.value.replace(/[^0-9\\+*-\\(\\)\.]+/g, '');
+            // try catch blok koristimo zbog eval  funkcije koja ili vraca vrednost ili error
+            // kako bi uhvatili error i uradili sta nama treba tj da stavimo da je result jednak
+            // prethodnom resultu jer matematicka operacija  ne bi mogla da radi
+            try {
+                // koristimo eval funkciju koja pretvara string u javascript operacije
+                // time lakse kalkulisemo vrednosti unutar inputa
+                // ukoliko je input prazan value vraca undefined pa proveravamo da li je value
+                // undefined ili ne, ako jeste onda u result stavljamo prazan string
+                result.innerText = eval(calculator.value) != undefined ? eval(calculator.value) : '';
+            } catch (error) {
+                // ukoliko eval vraca error onda setujemo da result bude jednak prethodnom stanju resulta
+                result.innerText = result.innerText;
+            }
+        })
     </script>
 </body>
 </html>
